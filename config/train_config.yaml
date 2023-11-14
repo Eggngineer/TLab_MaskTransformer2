@@ -1,0 +1,71 @@
+train:
+  epochs: 5000
+  optimizer: Adam
+  weight_decay: 1.0e-2
+  lr: 1.0e-4
+  loss: BCEWithLogit
+  sub_loss: BCEWithLogit
+  positive_weight: 0.309
+  late_start: 200
+
+valid:
+  per_epochs: 5
+
+loader:
+  train:
+    dataset_name: ThreeDMatch
+    batch_size: 16
+    num_workers: 16
+    shuffle: True
+    drop_last: True
+    loss_balance: [1, 1.0e-2]
+
+    three_d_match:
+      # '0', pi/6, pi/4, pi/3, pi/2, pi, 2pi
+      num_points: 2048
+      noise: False
+      outliers: False
+      rotMax: '0'
+      rate: 1
+      randomize: False
+      unseen: True
+
+    modelnet_40:
+      num_points: 2048
+      randomize_data: True
+      unseen: True
+      use_normals: False
+
+  valid:
+    dataset_name: ThreeDMatch
+    batch_size: 16
+    num_workers: 16
+    shuffle: False
+    drop_last: False
+
+    three_d_match:
+      # '0', pi/6, pi/4, pi/3, pi/2, pi, 2pi
+      num_points: 2048
+      noise: False
+      outliers: False
+      rotMax: '0'
+      rate: 1
+      randomize: False
+      unseen: True
+
+    modelnet_40:
+      num_points: 2048
+      randomize_data: True
+      unseen: True
+      use_normals: False
+
+model:
+  name: MaskTransformer_ver2
+  boundary: True
+  last_layer_sigmoid: False
+  late_start: 0
+
+wandb:
+  entity: eggng1neer
+  project: test
+  experiment: point cloud test
